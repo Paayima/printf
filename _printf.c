@@ -7,16 +7,21 @@
 */
 int _printf(const char *format, ...)
 {
-	va_list arh;
 	int i, count=0;
+	char *z;
+	
+	va_list arh;
 
-	va_start(arh,format);
-	for(i = 0; i < strlen(va_arg(arh, char)); i++)
+	va_start(arh, format);
+
+	for(i = 0; i < *z; i++)
 	{
-		if(va_arg(format, char) !='\0')
+		z = va_arg(arh, char *);
+		if(*z !='\0')
 			count++;
 	}
-	va_end(arh)
-	_putchar(1, count, 4);		
+	va_end(arh);
+	printf("%d", count);
+	_putchar(count);		
 	return 0;
 }
