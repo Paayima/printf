@@ -1,7 +1,4 @@
 #include "main.h"
-#include <stdarg.h>
-#include <string.h>
-  
 /**
 * the function _printf - print the number of characters entered at the stdio
 * to the stdout
