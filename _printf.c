@@ -21,7 +21,7 @@ int _printf(const char *format, ...)
                         count++;
         }
         va_end(arh);
+	_putchar(z);
         printf("%d", count);
-        _putchar(count);
         return 0;
 }
