@@ -7,21 +7,40 @@
 */
 int _printf(const char *format, ...)
 {
-        int i, count=0;
-        char *z;
+	int (*pfunc)(va_list, flags_t *);
+	const char *p;
+	flags_t flags = {0, 0, 0};
+
+        register  int count = 0;
 
         va_list arh;
 
         va_start(arh, format);
 
-        for(i = 0; i < *z; i++)
+        if(!format || (format[0] == '%' && !format[1]))
+		return (-1);
+	if(format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for(p = format; *p; p++)
         {
-                z = va_arg(arh, char *);
-                if(*z !='\0')
-                        count++;
+		if(*p == '%')
+		{
+			p++;
+			if(*p == '%')
+			{
+				count += _putchar('%');
+				continue;
+			}
+			while (get_flag(*p, &flags))
+				p++;
+			pfunc = get_print(*p);
+			count += (pfunc)
+				? pfunc(arh, &flags)
+				: _printf("%%%c", *p);
+		}else
+			count += _putchar(*p);
         }
-        va_end(arh);
-	_putchar(z);
-        printf("%d", count);
-        return 0;
+	_putchar(-1);
+	va_end(arh);
+        return (count);
 }
